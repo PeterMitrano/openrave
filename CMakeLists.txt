@@ -92,7 +92,7 @@ set(OPENRAVE_PYTHON_INSTALL_DIR)
 if( OPT_PYTHON )
   include(FindPythonInterp)
   ## check python
-  find_package(PythonLibs 2) # using PYTHON_INCLUDE_PATH instead of PYTHON_INCLUDE_DIRS?
+  find_package(PythonLibs 3) # using PYTHON_INCLUDE_PATH instead of PYTHON_INCLUDE_DIRS?
   if( NOT PYTHON_EXECUTABLE )
     # look specifically for 2.6
     find_program(PYTHON_EXECUTABLE NAMES python2.6 python PATHS [HKEY_LOCAL_MACHINE\\SOFTWARE\\Python\\PythonCore\\2.6\\InstallPath])
@@ -116,11 +116,11 @@ if( OPT_PYTHON )
 #      OUTPUT_VARIABLE _python_distpackage OUTPUT_STRIP_TRAILING_WHITESPACE
 #      RESULT_VARIABLE _python_failed1)
     execute_process(
-      COMMAND ${PYTHON_EXECUTABLE} -c "import numpy; print numpy.get_include()"
+      COMMAND ${PYTHON_EXECUTABLE} -c "import numpy; print(numpy.get_include())"
       OUTPUT_VARIABLE _python_numpy_include OUTPUT_STRIP_TRAILING_WHITESPACE
       RESULT_VARIABLE _python_failed0)
     execute_process(
-      COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; from myrelpath import relpath; print relpath(get_python_lib(1,prefix='${CMAKE_INSTALL_PREFIX}'),'${CMAKE_INSTALL_PREFIX}')"
+      COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; from myrelpath import relpath; print(relpath(get_python_lib(1,prefix='${CMAKE_INSTALL_PREFIX}'),'${CMAKE_INSTALL_PREFIX}'))"
       OUTPUT_VARIABLE OPENRAVE_PYTHON_INSTALL_DIR OUTPUT_STRIP_TRAILING_WHITESPACE
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
       RESULT_VARIABLE _python_failed2)
@@ -815,7 +815,7 @@ if(OPT_PYTHON AND PYTHON_EXECUTABLE)
   if( PYTHON_EXECUTABLE )
     # get the sympy version
     execute_process(
-      COMMAND ${PYTHON_EXECUTABLE} -c "import sympy; print sympy.__version__"
+      COMMAND ${PYTHON_EXECUTABLE} -c "import sympy; print(sympy.__version__)"
       OUTPUT_VARIABLE _sympy_version OUTPUT_STRIP_TRAILING_WHITESPACE
       RESULT_VARIABLE _sympy_version_failed)
     if( ${_sympy_version_failed} EQUAL 0 )
